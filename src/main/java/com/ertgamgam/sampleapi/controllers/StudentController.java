@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -19,9 +21,11 @@ public class StudentController {
 
     //http://localhost:8081/students?page=1&size=3&sort=id,DESC
     @GetMapping
-    public Page<Student> findAll(Pageable pageable) {
-        return studentRepository.findAll(pageable);
+    public String findAll(Pageable pageable) {
+        return studentRepository.customGetAll(pageable).toString();
+
     }
+
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Student> findById(@PathVariable String id) {
@@ -36,8 +40,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody Student student) {
-        student.onCreated();
+    public Student create(@Valid @RequestBody Student student) {
         return studentRepository.save(student);
     }
 }

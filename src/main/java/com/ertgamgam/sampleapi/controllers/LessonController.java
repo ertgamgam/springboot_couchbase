@@ -1,13 +1,13 @@
 package com.ertgamgam.sampleapi.controllers;
 
 import com.ertgamgam.sampleapi.entity.Lesson;
-import com.ertgamgam.sampleapi.entity.Student;
 import com.ertgamgam.sampleapi.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/lessons")
@@ -18,8 +18,8 @@ public class LessonController {
 
     //http://localhost:8081/lessons?page=1&size=3&sort=id,DESC
     @GetMapping
-    public Page<Lesson> findAll(Pageable pageable) {
-        return lessonRepository.findAll(pageable);
+    public List<Lesson> findAll(Pageable pageable) {
+        return lessonRepository.findAll(pageable).getContent();
     }
 
     @GetMapping(path = {"/{id}"})
